@@ -216,6 +216,22 @@
     });
   }, 100);
 
+  // --- Page view counter ---
+  var viewCountEls = document.querySelectorAll('.view-count');
+  viewCountEls.forEach(function (el) {
+    var pagePath = window.location.pathname.replace(/\.html$/, '').replace(/\//g, '-') || 'home';
+    var cleanPath = pagePath.replace(/^-/, '');
+    var counterKey = 'wangrenmin-' + cleanPath.replace(/[^a-zA-Z0-9-]/g, '').substring(0, 40);
+    fetch('https://api.counterapi.dev/v1/wangrenmin/' + encodeURIComponent(counterKey) + '/up')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        el.textContent = (data && data.count) ? data.count : 0;
+      })
+      .catch(function () {
+        el.textContent = '';
+      });
+  });
+
   // --- Share buttons ---
   document.querySelectorAll('.share-link.wechat').forEach(function (btn) {
     btn.addEventListener('click', function (e) {

@@ -1,24 +1,26 @@
 backend:
   name: git-gateway
   branch: main
+  site_domain: wangrenmin.com
 
 media_folder: "images"
 public_folder: "/images"
 
 locale: "zh_Hans"
 
+site_url: https://wangrenmin.com
+display_url: https://wangrenmin.com
+
 collections:
   - name: "articles"
     label: "文章管理"
     label_singular: "文章"
     folder: "/"
-    filter: { field: "layout", value: "article" }
     create: true
     slug: "article-{{slug}}"
     editor:
       preview: false
     fields:
-      - { label: "模板", name: "layout", type: "hidden", default: "article" }
       - { label: "文章标题", name: "title", widget: "string" }
       - { label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
       - { label: "分类", name: "category", widget: "select", options: ["日常保健", "饮食营养", "运动健康", "心理健康", "家庭健康", "急救知识"] }

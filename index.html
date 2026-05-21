@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老王的健康指南 | 王仁民</title>
+<meta name="description" content="老王的健康指南——用简单的方式讲靠谱的健康。10篇科普文章，涵盖洗手、护颈、控盐、睡眠、护眼、运动等日常健康话题。">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ====== 导航栏 ====== -->
+<header class="site-header">
+  <div class="container nav-container">
+    <a href="/" class="logo">老王的健康指南</a>
+    <button class="search-toggle" id="searchToggle" aria-label="搜索">🔍</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="/">首页</a>
+      <a href="#articles">文章</a>
+      <a href="#categories">分类</a>
+      <a href="#about">关于</a>
+      <a href="#subscribe">订阅</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- 搜索栏 -->
+  <div class="search-bar" id="searchBar">
+    <div class="container">
+      <input type="text" id="searchInput" placeholder="搜索文章（如：抗炎、睡眠、食谱）" autocomplete="off">
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <div class="container search-results" id="searchResults"></div>
+  </div>
+</header>
+
+<!-- ====== 主横幅 ====== -->
+<section class="hero">
+  <div class="container hero-content">
+    <p class="hero-tag">老王的健康指南</p>
+    <h1>用简单的方式<br>讲靠谱的健康</h1>
+    <p class="hero-desc">
+      10篇原创科普文章，涵盖日常保健、饮食营养、运动健康、<br>心理健康、家庭健康。科普仅供参考，不能替代专业诊疗。
+    </p>
+    <div class="hero-buttons">
+      <a href="#articles" class="btn btn-primary">浏览文章</a>
+      <a href="#about" class="btn btn-outline">了解更多</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 分类导航 ====== -->
+<section class="categories" id="categories">
+  <div class="container">
+    <h2 class="section-title">探索健康主题</h2>
+    <div class="category-grid">
+      <a href="#" class="category-card" data-category="daily">
+        <span class="cat-icon">🛡️</span>
+        <h3>日常保健</h3>
+        <p>洗手、护颈、护眼、口腔等日常习惯</p>
+      </a>
+      <a href="#" class="category-card" data-category="diet">
+        <span class="cat-icon">🥗</span>
+        <h3>饮食营养</h3>
+        <p>控盐、喝水、营养搭配</p>
+      </a>
+      <a href="#" class="category-card" data-category="exercise">
+        <span class="cat-icon">🏃</span>
+        <h3>运动健康</h3>
+        <p>科学运动、安全锻炼、避免损伤</p>
+      </a>
+      <a href="#" class="category-card" data-category="mind">
+        <span class="cat-icon">🧠</span>
+        <h3>心理健康</h3>
+        <p>睡眠调理、压力管理、放松技巧</p>
+      </a>
+      <a href="#" class="category-card" data-category="family">
+        <span class="cat-icon">👨‍👩‍👧‍👦</span>
+        <h3>家庭健康</h3>
+        <p>中老年保养、全家健康管理</p>
+      </a>
+      <a href="#" class="category-card" data-category="emergency">
+        <span class="cat-icon">🚨</span>
+        <h3>急救知识</h3>
+        <p>心梗识别、院前处置、紧急应对</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 最新文章 ====== -->
+<section class="articles" id="articles">
+  <div class="container">
+    <h2 class="section-title">最新文章</h2>
+    <div class="article-grid">
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #d8c0c0, #c8a0a0);">
+          <span class="article-category">急救知识</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-21">2026年5月21日</time>
+          <h3><a href="article-heart-attack.html">急性心肌梗死的胸痛识别与早期预警</a></h3>
+          <p>急性心梗的预后取决于缺血总时间。胸痛六大核心特征：部位、性质、程度、持续时间、放射痛、伴随症状。</p>
+          <a href="article-heart-attack.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #c8d6c0, #a8c4a0);">
+          <span class="article-category">日常保健</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-20">2026年5月20日</time>
+          <h3><a href="article-wash-hands.html">洗手这件小事，你做对了吗？</a></h3>
+          <p>最简单、最有效的防病方法，就长在你胳膊上。一双没洗干净的手上，能携带几十万甚至上百万个细菌。</p>
+          <a href="article-wash-hands.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #b8c4d4, #98a8c0);">
+          <span class="article-category">日常保健</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-19">2026年5月19日</time>
+          <h3><a href="article-neck-care.html">脖子又酸又僵？久坐族护颈小技巧</a></h3>
+          <p>低头15度颈椎负重约12公斤，低头60度约27公斤。颈椎的磨损不可逆，只能预防和延缓。</p>
+          <a href="article-neck-care.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #e0d4c0, #d0c0a0);">
+          <span class="article-category">饮食营养</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-18">2026年5月18日</time>
+          <h3><a href="article-salt-intake.html">你每天吃的盐，可能远超想象</a></h3>
+          <p>大多数中国人日均盐摄入量在10克以上，远超5克标准。问题就出在"隐形盐"上。</p>
+          <a href="article-salt-intake.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #c8ccd6, #a8b0c4);">
+          <span class="article-category">心理健康</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-17">2026年5月17日</time>
+          <h3><a href="article-sleep-tips.html">睡不着别慌，试试这些不用吃药的方法</a></h3>
+          <p>越是着急"我怎么还睡不着"，就越是睡不着。调整生活方式，很多情况下不需要吃药。</p>
+          <a href="article-sleep-tips.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #c0d0d0, #a0b8b8);">
+          <span class="article-category">日常保健</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-16">2026年5月16日</time>
+          <h3><a href="article-cold-prevention.html">感冒高发季，预防比吃药更重要</a></h3>
+          <p>真正打败病毒的是你自己的免疫系统。预防做得好，一年能省下不少吃药和跑医院的麻烦。</p>
+          <a href="article-cold-prevention.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #d4c8d0, #c0a8b8);">
+          <span class="article-category">日常保健</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-15">2026年5月15日</time>
+          <h3><a href="article-oral-health.html">天天刷牙还蛀牙？你可能从第一步就错了</a></h3>
+          <p>牙刷只能清洁牙齿表面约60%的面积。牙缝恰恰是蛀牙和牙周病的高发区。</p>
+          <a href="article-oral-health.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #b8d0e0, #98b8d0);">
+          <span class="article-category">饮食营养</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-14">2026年5月14日</time>
+          <h3><a href="article-drink-water.html">喝水这件小事，你真的喝对了吗？</a></h3>
+          <p>每天喝够水、喝对水，是最不费钱的养生方式。白开水是最好的选择。</p>
+          <a href="article-drink-water.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #d0c8c0, #b8b0a0);">
+          <span class="article-category">家庭健康</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-13">2026年5月13日</time>
+          <h3><a href="article-elderly-care.html">中老年人日常保养，记住温恒度三个字</a></h3>
+          <p>核心原则六个字：温和、持之以恒、有度。饮食、运动、作息、心态，四个方面协调好。</p>
+          <a href="article-elderly-care.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #c0d4c8, #a0c0b0);">
+          <span class="article-category">日常保健</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-12">2026年5月12日</time>
+          <h3><a href="article-eye-care.html">屏幕时代的护眼指南——每天看屏幕的你必看</a></h3>
+          <p>屏幕可以换，眼睛换不了。记住"20-20-20"法则，每用眼20分钟，抬头看远处20秒。</p>
+          <a href="article-eye-care.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+      <article class="article-card">
+        <div class="article-img" style="background: linear-gradient(135deg, #d8c8c0, #c8b0a0);">
+          <span class="article-category">运动健康</span>
+        </div>
+        <div class="article-body">
+          <time datetime="2026-05-11">2026年5月11日</time>
+          <h3><a href="article-exercise-tips.html">运动健身，这些注意事项比动作本身更重要</a></h3>
+          <p>运动不当，效果不但打折扣，还可能伤到自己。核心原则：循序渐进、科学适度、安全第一。</p>
+          <a href="article-exercise-tips.html" class="read-more">阅读全文 →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== 关于作者 ====== -->
+<section class="about" id="about">
+  <div class="container about-content">
+    <div class="about-avatar">
+      <img src="images/avatar.png" alt="王仁民医生" width="160" height="200">
+    </div>
+    <div class="about-text">
+      <h2>你好，我是一名全科医生</h2>
+      <p>
+        我是一名执业全科医生。每天在门诊，我看到太多人因为不懂最基本的健康常识而耽误了身体。
+        这个网站，就是想把诊室里来不及说的话，慢慢讲给你听。
+      </p>
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='36'%3E%3Ctext x='0' y='24' fill='%235B7B5E' font-size='14'%3E✍ 王仁民%3C/text%3E%3C/svg%3E" alt="老王签名" class="signature" width="120" height="36">
+    </div>
+  </div>
+</section>
+
+<!-- ====== 邮件订阅 ====== -->
+<section class="subscribe" id="subscribe">
+  <div class="container subscribe-content">
+    <h2>每周一封健康邮件</h2>
+    <p>精选本周最值得读的 3 篇文章 + 1 个实用健康技巧，直达你的邮箱。不卖产品、不刷屏。</p>
+    <form class="subscribe-form" name="subscribe" method="POST" action="https://buttondown.email/api/emails/embed-subscribe/renmin" target="subFrame">
+      <input type="hidden" name="form-name" value="subscribe">
+      <input type="email" name="email" placeholder="输入你的邮箱地址" required>
+      <button type="submit" class="btn btn-primary">免费订阅</button>
+    </form><iframe name="subFrame" style="display:none"></iframe>
+    
+    <p class="subscribe-note">新站上线，欢迎订阅 · 每周一篇，可随时退订</p>
+  </div>
+</section>
+
+<!-- ====== 页脚 ====== -->
+<footer class="site-footer">
+  <div class="container footer-content">
+    <div class="footer-col">
+      <h4>王仁民</h4>
+      <p>用科学的态度讲健康<br>用生活的智慧养身体</p>
+    </div>
+    <div class="footer-col">
+      <h4>文章分类</h4>
+      <a href="#">日常保健</a>
+      <a href="#">饮食营养</a>
+      <a href="#">运动健康</a>
+      <a href="#">心理健康</a>
+      <a href="#">家庭健康</a>
+    </div>
+    <div class="footer-col">
+      <h4>关于</h4>
+      <a href="#about">个人简介</a>
+      <a href="#">医学顾问</a>
+      <a href="#">内容政策</a>
+      <a href="#">联系方式</a>
+    </div>
+    <div class="footer-col">
+      <h4>关注</h4>
+      <a href="#">公众号</a>
+      <a href="#">小红书</a>
+      <a href="#">知乎</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 王仁民 · 保留所有权利 · 本网站所有内容仅为科普参考，不构成任何诊疗、用药及治疗建议，身体不适请及时线下就医。</p>
+    <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" style="color:rgba(255,255,255,.35);font-size:.78rem;">苏ICP备2026030753号</a></p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

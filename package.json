@@ -1,0 +1,9 @@
+{
+  "name": "wangrenmin-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "老王的健康指南 — 静态博客 + 自托管邮件订阅",
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}

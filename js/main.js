@@ -72,9 +72,38 @@
     });
   }
 
-  // --- Subscribe ---
-  // Subscription handled by Blogtrottr (free RSS-to-email).
-  // Users click the subscribe button and complete signup on Blogtrottr's page.
+  // --- Subscribe form ---
+  var subscribeForms = document.querySelectorAll('form[name="subscribe"]');
+  subscribeForms.forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var emailInput = form.querySelector('input[name="email"]');
+      if (!emailInput || !emailInput.value.trim()) return;
+
+      var btn = form.querySelector('button[type="submit"]');
+      var originalText = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = '提交中...'; btn.disabled = true; }
+
+      fetch(form.getAttribute('action'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailInput.value.trim() })
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          window.location.href = '/thanks.html';
+        } else {
+          if (btn) { btn.textContent = originalText; btn.disabled = false; }
+          alert(data.message || '订阅失败，请稍后再试');
+        }
+      })
+      .catch(function () {
+        if (btn) { btn.textContent = originalText; btn.disabled = false; }
+        alert('网络错误，请稍后再试');
+      });
+    });
+  });
 
   // --- Smooth scroll for anchor links (polyfill for older browsers) ---
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {

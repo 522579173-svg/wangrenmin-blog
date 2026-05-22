@@ -1,19 +1,5 @@
-// api/subscribe.js — Handle email subscriptions
-// Sends notification to admin, who manually maintains data/subscribers.json
-const nodemailer = require("nodemailer");
-
-const SMTP_USER = process.env.QQ_EMAIL || "522579173@qq.com";
-const SMTP_PASS = process.env.QQ_SMTP_CODE || "";
-const ADMIN_EMAIL = "522579173@qq.com";
-
-function getTransporter() {
-  return nodemailer.createTransport({
-    host: "smtp.qq.com",
-    port: 465,
-    secure: true,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-  });
-}
+// api/subscribe.js — Auto-subscribe: adds email to SUBSCRIBERS env var
+const { addSubscriber } = require("../lib/subscribers.js");
 
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -36,23 +22,8 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const transporter = getTransporter();
-    await transporter.sendMail({
-      from: '"老王的健康指南" <' + SMTP_USER + ">",
-      to: ADMIN_EMAIL,
-      subject: "新订阅: " + email,
-      html: '<div style="font-family:sans-serif;padding:20px;">'
-        + '<h2>新订阅通知</h2>'
-        + '<p>邮箱: <strong>' + email + '</strong></p>'
-        + '<p>时间: ' + new Date().toLocaleString("zh-CN") + '</p>'
-        + '<p style="color:#666;">请将此邮箱添加到 <code>data/subscribers.json</code> 文件中。</p>'
-        + "</div>",
-    });
-
-    return res.status(200).json({
-      ok: true,
-      message: "订阅成功！新文章发布时会自动发送到你的邮箱。",
-    });
+    const result = await addSubscriber(email);
+    return res.status(200).json(result);
   } catch (e) {
     console.error("Subscribe error:", e.message);
     return res.status(500).json({ ok: false, message: "服务器错误，请稍后再试" });

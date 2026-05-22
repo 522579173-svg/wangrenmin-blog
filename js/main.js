@@ -87,7 +87,7 @@
       fetch(form.getAttribute('action'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: emailInput.value.trim() })
+        body: JSON.stringify({ email: emailInput.value.trim(), action: 'subscribe' })
       })
       .then(function (res) { return res.json(); })
       .then(function (data) {

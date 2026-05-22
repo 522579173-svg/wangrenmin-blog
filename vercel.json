@@ -1,21 +1,13 @@
 {
   "functions": {
-    "api/subscribe.js": {
-      "memory": 256,
-      "maxDuration": 30
-    },
-    "api/unsubscribe.js": {
-      "memory": 256,
-      "maxDuration": 30
-    },
-    "api/send-newsletter.js": {
+    "api/subscribers.js": {
       "memory": 512,
       "maxDuration": 300
     }
   },
   "crons": [
     {
-      "path": "/api/send-newsletter?token=wangrenmin-newsletter",
+      "path": "/api/subscribers?action=send&token=wangrenmin-newsletter",
       "schedule": "0 8 * * *"
     }
   ]

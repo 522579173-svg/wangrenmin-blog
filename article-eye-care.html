@@ -77,11 +77,12 @@
   <div class="container subscribe-content">
     <h2>每周一封健康邮件</h2>
     <p>精选本周最值得读的3篇文章+1个实用健康技巧，直达你的邮箱。</p>
-    <form class="subscribe-form" name="subscribe" method="POST" action="/api/subscribe">
+    <form class="subscribe-form" name="subscribe" method="POST" action="/api/subscribers">
+      <input type="hidden" name="action" value="subscribe">
       <input type="email" name="email" placeholder="输入你的邮箱地址" required>
       <button type="submit" class="btn btn-primary">免费订阅</button>
     </form>
-    <p class="subscribe-note">新站上线，欢迎订阅 · 每周一篇，可随时<a href="javascript:void(0)" onclick="var e=prompt('请输入要退订的邮箱地址：');if(e){fetch('/api/unsubscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e})}).then(function(r){return r.json()}).then(function(d){alert(d.message)})}" style="color:inherit;text-decoration:underline;">退订</a></p>
+    <p class="subscribe-note">新站上线，欢迎订阅 · 每周一篇，可随时<a href="javascript:void(0)" onclick="var e=prompt('请输入要退订的邮箱地址：');if(e){fetch('/api/subscribers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,action:'unsubscribe'})}).then(function(r){return r.json()}).then(function(d){alert(d.message)})}" style="color:inherit;text-decoration:underline;">退订</a></p>
   </div>
 </section>
 <footer class="site-footer">

@@ -7,6 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
+command = "python3 scripts/generate-rss.py"
 publish = "C:\\Users\\Ray\\Desktop\\wangrenmin-blog"
 publishOrigin = "default"
 

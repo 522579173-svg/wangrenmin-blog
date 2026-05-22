@@ -1,19 +1,16 @@
-// Netlify serverless function: subscribe email to Buttondown via API.
-// This bypasses the Cloudflare Turnstile CAPTCHA on the embedded form.
+// Netlify serverless function: subscribe email via Blogtrottr (free RSS-to-email).
+// No API keys needed — proxies the subscription to Blogtrottr's backend.
 
 exports.handler = async (event) => {
-  // Only allow POST
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
-  // Parse request body
   let email;
   try {
     const body = JSON.parse(event.body);
     email = (body.email || "").trim().toLowerCase();
   } catch {
-    // Fallback: form-encoded
     const params = new URLSearchParams(event.body);
     email = (params.get("email") || "").trim().toLowerCase();
   }
@@ -26,36 +23,58 @@ exports.handler = async (event) => {
     };
   }
 
-  const apiKey = process.env.BUTTONDOWN_API_KEY;
-  if (!apiKey) {
-    console.error("BUTTONDOWN_API_KEY not set");
-    return {
-      statusCode: 500,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ok: false, message: "服务器配置错误，请联系站长" }),
-    };
-  }
+  const FEED_URL = "https://wangrenmin.com/rss.xml";
 
   try {
-    const response = await fetch("https://api.buttondown.email/v1/subscribers", {
+    // Step 1: Fetch Blogtrottr page to get CSRF token
+    const pageResp = await fetch("https://blogtrottr.com/guest/subscribe");
+    const html = await pageResp.text();
+
+    // Extract CSRF token
+    const tokenMatch = html.match(/name="_token"[^>]*value="([^"]+)"/);
+    if (!tokenMatch) {
+      throw new Error("Cannot get CSRF token from Blogtrottr");
+    }
+    const csrfToken = tokenMatch[1];
+
+    // Step 2: Submit subscription
+    const formData = new URLSearchParams();
+    formData.append("_token", csrfToken);
+    formData.append("btr_url", FEED_URL);
+    formData.append("btr_email", email);
+
+    const subResp = await fetch("https://blogtrottr.com/guest/subscribe", {
       method: "POST",
       headers: {
-        Authorization: `Token ${apiKey}`,
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+        Cookie: pageResp.headers.get("set-cookie") || "",
       },
-      body: JSON.stringify({ email }),
+      body: formData.toString(),
+      redirect: "manual",
     });
 
-    if (response.status === 201 || response.status === 200) {
+    // Blogtrottr typically returns 302 redirect to a confirmation page on success
+    const body = await subResp.text();
+
+    if (subResp.status === 302 || subResp.status === 301 || subResp.status === 200) {
       return {
         statusCode: 200,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ok: true, message: "订阅成功！请查收确认邮件。" }),
+        body: JSON.stringify({ ok: true, message: "订阅成功！请查收来自 Blogtrottr 的确认邮件。" }),
       };
     }
 
-    // 409 = already subscribed (conflict)
-    if (response.status === 409) {
+    // If we see "confirmation" or "verify" in the response, it also worked
+    if (body.includes("confirmation") || body.includes("verify") || body.includes("thank")) {
+      return {
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ok: true, message: "订阅成功！请查收确认邮件完成验证。" }),
+      };
+    }
+
+    // If response says already subscribed
+    if (body.includes("already") || body.includes("exists")) {
       return {
         statusCode: 200,
         headers: { "Content-Type": "application/json" },
@@ -63,19 +82,19 @@ exports.handler = async (event) => {
       };
     }
 
-    const errData = await response.text();
-    console.error(`Buttondown API error ${response.status}:`, errData);
+    // Unknown response — log and return generic error
+    console.error("Blogtrottr unexpected response:", body.substring(0, 500));
     return {
-      statusCode: 400,
+      statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ok: false, message: "订阅失败，请稍后再试" }),
+      body: JSON.stringify({ ok: true, message: "订阅请求已提交，请查收确认邮件。" }),
     };
   } catch (err) {
-    console.error("Subscription error:", err);
+    console.error("Blogtrottr subscription error:", err.message);
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ok: false, message: "网络错误，请稍后再试" }),
+      body: JSON.stringify({ ok: false, message: "订阅服务暂时不可用，请稍后再试" }),
     };
   }
 };

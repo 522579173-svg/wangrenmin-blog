@@ -1,4 +1,5 @@
 {
+  "buildCommand": "python3 scripts/generate-rss.py",
   "functions": {
     "api/subscribe.js": {
       "memory": 256,

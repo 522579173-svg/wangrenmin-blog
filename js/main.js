@@ -73,16 +73,17 @@
   }
 
   // --- Subscribe form ---
-  // Form submits to Buttondown in background (iframe).
-  // Show success and redirect to thanks page.
+  // Form submits to Buttondown via popup window (handles Cloudflare Turnstile verification).
   var subscribeForms = document.querySelectorAll('form[name="subscribe"]');
   subscribeForms.forEach(function (form) {
     form.addEventListener('submit', function () {
       var emailInput = form.querySelector('input[name="email"]');
       if (!emailInput || !emailInput.value.trim()) return;
+      // Popup handles verification — close itself on success.
+      // Redirect to thanks page after giving popup time to appear.
       setTimeout(function () {
         window.location.href = '/thanks.html';
-      }, 800);
+      }, 1500);
     });
   });
 

@@ -5,5 +5,24 @@
   "description": "老王的健康指南 — 静态博客 + 自托管邮件订阅",
   "dependencies": {
     "nodemailer": "^6.9.0"
-  }
+  },
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/522579173-svg/wangrenmin-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/522579173-svg/wangrenmin-blog/issues"
+  },
+  "homepage": "https://github.com/522579173-svg/wangrenmin-blog#readme"
 }

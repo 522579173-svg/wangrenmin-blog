@@ -73,17 +73,36 @@
   }
 
   // --- Subscribe form ---
-  // Form submits to Buttondown via popup window (handles Cloudflare Turnstile verification).
+  // Submits email to Netlify function, which calls Buttondown API (no CAPTCHA).
   var subscribeForms = document.querySelectorAll('form[name="subscribe"]');
   subscribeForms.forEach(function (form) {
-    form.addEventListener('submit', function () {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
       var emailInput = form.querySelector('input[name="email"]');
       if (!emailInput || !emailInput.value.trim()) return;
-      // Popup handles verification — close itself on success.
-      // Redirect to thanks page after giving popup time to appear.
-      setTimeout(function () {
-        window.location.href = '/thanks.html';
-      }, 1500);
+
+      var btn = form.querySelector('button[type="submit"]');
+      var originalText = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = '提交中...'; btn.disabled = true; }
+
+      fetch(form.getAttribute('action'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailInput.value.trim() })
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          window.location.href = '/thanks.html';
+        } else {
+          if (btn) { btn.textContent = originalText; btn.disabled = false; }
+          alert(data.message || '订阅失败，请稍后再试');
+        }
+      })
+      .catch(function () {
+        if (btn) { btn.textContent = originalText; btn.disabled = false; }
+        alert('网络错误，请稍后再试');
+      });
     });
   });
 

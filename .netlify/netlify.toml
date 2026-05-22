@@ -3,6 +3,7 @@ headers = []
 redirects = []
 
 [functions]
+directory = "netlify/functions"
 
 [functions."*"]
 
@@ -10,6 +11,9 @@ redirects = []
 command = "python3 scripts/generate-rss.py"
 publish = "C:\\Users\\Ray\\Desktop\\wangrenmin-blog"
 publishOrigin = "default"
+
+# NOTE: Set BUTTONDOWN_API_KEY in Netlify dashboard → Site settings → Environment variables.
+# Get your API key from: https://buttondown.email/settings → Programmatic access
 
 [build.environment]
 

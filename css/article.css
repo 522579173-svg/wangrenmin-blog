@@ -66,6 +66,12 @@
 }
 .post-body li { margin-bottom: 6px; }
 .post-body strong { color: var(--text); }
+.post-body blockquote {
+  background: var(--gold-light); border-left: 4px solid var(--gold);
+  padding: 16px 22px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 28px 0; font-size: .98rem; line-height: 1.7; color: var(--text-light);
+}
+.post-body blockquote p { margin-bottom: 0; }
 
 /* Medical disclaimer */
 .medical-disclaimer {

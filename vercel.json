@@ -8,7 +8,7 @@
   "crons": [
     {
       "path": "/api/subscribers?action=send&token=19730117Cba",
-      "schedule": "0 8 * * *"
+      "schedule": "0 9 * * 0"
     }
   ]
 }

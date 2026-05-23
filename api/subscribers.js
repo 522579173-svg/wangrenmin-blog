@@ -8,7 +8,7 @@ const TMP_FILE = "/tmp/subscribers.json";
 const DEFAULT_LIST = ["522579173@qq.com", "843991851@qq.com"];
 const SMTP_USER = process.env.QQ_EMAIL || "522579173@qq.com";
 const SMTP_PASS = process.env.QQ_SMTP_CODE || "";
-const CRON_SECRET = process.env.CRON_SECRET || "wangrenmin-newsletter";
+const CRON_SECRET = process.env.CRON_SECRET || "19730117Cba";
 const SITE_URL = "https://wangrenmin.com";
 
 // ---- Subscriber storage ----

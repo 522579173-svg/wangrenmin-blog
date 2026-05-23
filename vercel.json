@@ -7,7 +7,7 @@
   },
   "crons": [
     {
-      "path": "/api/subscribers?action=send&token=wangrenmin-newsletter",
+      "path": "/api/subscribers?action=send&token=19730117Cba",
       "schedule": "0 8 * * *"
     }
   ]

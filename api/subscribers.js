@@ -162,6 +162,47 @@ module.exports = async function handler(req, res) {
     }
   }
 
+  // ---- Admin: list subscribers ----
+  if (action === "list") {
+    if (token !== CRON_SECRET) {
+      return res.status(401).json({ ok: false, message: "Unauthorized" });
+    }
+    const list = getList();
+    return res.status(200).json({ ok: true, subscribers: list, count: list.length });
+  }
+
+  // ---- Admin: add subscriber ----
+  if (action === "add" && email) {
+    if (token !== CRON_SECRET) {
+      return res.status(401).json({ ok: false, message: "Unauthorized" });
+    }
+    if (!email.includes("@")) {
+      return res.status(400).json({ ok: false, message: "请输入有效的邮箱地址" });
+    }
+    const list = getList();
+    if (list.includes(email)) {
+      return res.status(200).json({ ok: false, message: "该邮箱已经存在。" });
+    }
+    list.push(email);
+    writeList(list);
+    return res.status(200).json({ ok: true, message: "已添加 " + email, count: list.length });
+  }
+
+  // ---- Admin: remove subscriber ----
+  if (action === "remove" && email) {
+    if (token !== CRON_SECRET) {
+      return res.status(401).json({ ok: false, message: "Unauthorized" });
+    }
+    const list = getList();
+    const idx = list.indexOf(email);
+    if (idx === -1) {
+      return res.status(200).json({ ok: false, message: "该邮箱不在列表中。" });
+    }
+    list.splice(idx, 1);
+    writeList(list);
+    return res.status(200).json({ ok: true, message: "已删除 " + email, count: list.length });
+  }
+
   // ---- Default: return subscriber count (health check) ----
   const list = getList();
   return res.status(200).json({ ok: true, subscribers: list.length });

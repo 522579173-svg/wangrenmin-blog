@@ -97,7 +97,42 @@ module.exports = async function handler(req, res) {
     }
     list.push(email);
     writeList(list);
-    return res.status(200).json({ ok: true, message: "订阅成功！新文章发布时会自动发送到你的邮箱。" });
+
+    // Immediately send the latest article to the new subscriber
+    let welcomeSent = false;
+    try {
+      const article = await getLatestArticle();
+      if (article) {
+        const transporter = getTransporter();
+        await transporter.sendMail({
+          from: '"老王的健康指南" <' + SMTP_USER + ">",
+          to: email,
+          subject: "欢迎订阅 · " + article.title,
+          html: '<div style="max-width:600px;margin:0 auto;font-family:system-ui,sans-serif;padding:20px;">'
+            + '<div style="text-align:center;padding:30px 0;border-bottom:2px solid #5B7B5E;">'
+            + '<h1 style="color:#5B7B5E;margin:0;">老王的健康指南</h1>'
+            + '<p style="color:#888;font-size:14px;">用简单的方式讲靠谱的健康</p></div>'
+            + '<div style="padding:20px 0;"><p style="color:#5B7B5E;font-weight:600;">🎉 订阅成功！</p>'
+            + '<p style="color:#666;">下面是为你准备的最新文章：</p></div>'
+            + '<div style="padding:10px 0 30px;"><h2 style="color:#333;">' + article.title + '</h2>'
+            + '<p style="color:#666;line-height:1.8;">' + (article.description || "") + '</p>'
+            + '<p style="margin-top:24px;"><a href="' + article.link + '" style="background:#5B7B5E;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:16px;">阅读全文 →</a></p></div>'
+            + '<div style="border-top:1px solid #eee;padding:20px 0;text-align:center;color:#aaa;font-size:12px;">'
+            + '<p>每周一篇健康科普，不卖产品、不刷屏。</p>'
+            + '<p>如需退订，请访问 <a href="' + SITE_URL + '/#subscribe" style="color:#aaa;">' + SITE_URL + '</a> 点击页面底部的退订链接。</p></div></div>',
+        });
+        welcomeSent = true;
+      }
+    } catch (e) {
+      console.error("Welcome email failed:", e.message);
+    }
+
+    return res.status(200).json({
+      ok: true,
+      message: welcomeSent
+        ? "订阅成功！最新文章已发送到你的邮箱，快去看看吧。"
+        : "订阅成功！新文章发布时会自动发送到你的邮箱。",
+    });
   }
 
   // ---- Unsubscribe ----

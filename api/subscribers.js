@@ -176,14 +176,14 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ ok: true, message: "已退订，你将不再收到邮件。" });
   }
 
-  // ---- Send weekly digest ----
+  // ---- Send newsletter ----
   if (action === "send") {
     if (token !== CRON_SECRET) {
       return res.status(401).json({ ok: false, message: "Unauthorized" });
     }
     try {
-      const articles = await getRecentArticles(3);
-      if (articles.length === 0) {
+      const article = await getLatestArticle();
+      if (!article) {
         return res.status(200).json({ ok: true, message: "No articles found", sent: 0 });
       }
       const subscribers = getList();
@@ -195,33 +195,19 @@ module.exports = async function handler(req, res) {
       const transporter = getTransporter();
       let sent = 0, failed = 0;
 
-      // Build article list HTML
-      let articlesHtml = '';
-      articles.forEach(function(a, i) {
-        articlesHtml +=
-          '<div style="padding:16px 0;' + (i < articles.length - 1 ? 'border-bottom:1px solid #f0f0f0;' : '') + '">'
-          + '<a href="' + a.link + '" style="color:#333;text-decoration:none;font-weight:600;font-size:16px;">' + (i + 1) + '. ' + a.title + '</a>'
-          + '<p style="color:#888;font-size:14px;margin:4px 0 0;">' + (a.description || '') + '</p>'
-          + '</div>';
-      });
-
-      const now = new Date();
-      const weekLabel = now.getFullYear() + '年第' + Math.ceil((now.getDate() + (new Date(now.getFullYear(), now.getMonth(), 1).getDay() || 7)) / 7) + '周';
-
       for (const to of subscribers) {
         try {
           await transporter.sendMail({
             from: '"老王的健康指南" <' + SMTP_USER + ">",
             to: to,
-            subject: '【每周健康精选】' + weekLabel + ' · 老王的健康指南',
+            subject: '【每周健康精选】' + article.title,
             html: '<div style="max-width:600px;margin:0 auto;font-family:system-ui,sans-serif;padding:20px;">'
               + '<div style="text-align:center;padding:30px 0;border-bottom:2px solid #5B7B5E;">'
               + '<h1 style="color:#5B7B5E;margin:0;">老王的健康指南</h1>'
               + '<p style="color:#888;font-size:14px;">用简单的方式讲靠谱的健康</p></div>'
-              + '<div style="padding:24px 0;">'
-              + '<p style="color:#5B7B5E;font-size:16px;font-weight:600;margin-bottom:16px;">📖 本周精选 3 篇</p>'
-              + articlesHtml
-              + '</div>'
+              + '<div style="padding:30px 0;"><h2 style="color:#333;">' + article.title + '</h2>'
+              + '<p style="color:#666;line-height:1.8;">' + (article.description || '') + '</p>'
+              + '<p style="margin-top:24px;"><a href="' + article.link + '" style="background:#5B7B5E;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-size:16px;">阅读全文 →</a></p></div>'
               + '<div style="background:#f8faf6;padding:20px;border-radius:8px;margin:20px 0;">'
               + '<p style="color:#5B7B5E;font-weight:600;margin-bottom:8px;">💡 本周健康小贴士</p>'
               + '<p style="color:#555;font-size:15px;line-height:1.7;">' + tip.tip + '</p>'
@@ -241,7 +227,7 @@ module.exports = async function handler(req, res) {
         }
         await new Promise(r => setTimeout(r, 2000));
       }
-      return res.status(200).json({ ok: true, message: "Weekly digest sent", articles: articles.length, tip: tip.tip, sent: sent, failed: failed });
+      return res.status(200).json({ ok: true, message: "Newsletter sent", article: article.title, tip: tip.tip, sent: sent, failed: failed });
     } catch (e) {
       console.error("Newsletter error:", e.message);
       return res.status(500).json({ ok: false, message: "Error: " + e.message });

@@ -273,7 +273,7 @@
       <input type="email" name="email" placeholder="输入你的邮箱地址" required>
       <button type="submit" class="btn btn-primary">免费订阅</button>
     </form>
-    <p class="subscribe-note">新站上线，欢迎订阅 · 每周日早上9:00发送，可随时<a href="javascript:void(0)" onclick="var e=prompt('请输入要退订的邮箱地址：');if(e){fetch('/api/subscribers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,action:'unsubscribe'})}).then(function(r){return r.json()}).then(function(d){alert(d.message)})}" style="color:#D4A017;text-decoration:underline;font-weight:700;">退订</a></p>
+    <p class="subscribe-note">新站上线，欢迎订阅 · 可随时<a href="javascript:void(0)" onclick="var e=prompt('请输入要退订的邮箱地址：');if(e){fetch('/api/subscribers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:e,action:'unsubscribe'})}).then(function(r){return r.json()}).then(function(d){alert(d.message)})}" style="color:#D4A017;text-decoration:underline;font-weight:700;">退订</a></p>
   </div>
 </section>
 

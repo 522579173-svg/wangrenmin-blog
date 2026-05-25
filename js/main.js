@@ -248,7 +248,34 @@
     el.textContent = (count + 88);
   });
 
-  // --- Share: copy link ---
+  // --- Share ---
+  // WeChat: copy link for pasting into WeChat
+  document.querySelectorAll('.share-link.wechat').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var url = window.location.href;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(function () {
+          alert('链接已复制，打开微信粘贴即可分享');
+        });
+      } else {
+        prompt('复制链接分享到微信：', url);
+      }
+    });
+  });
+
+  // Weibo: open share page
+  document.querySelectorAll('.share-link.weibo').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var title = document.title.split(' | ')[0];
+      var url = window.location.href;
+      var shareUrl = 'https://service.weibo.com/share/share.php?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url);
+      window.open(shareUrl, '_blank', 'width=600,height=500');
+    });
+  });
+
+  // Copy link
   document.querySelectorAll('.share-link.copy').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();

@@ -127,6 +127,7 @@
 
   // Article data for search
   var articleData = [
+    {title:'体检报告怎么看？全科医生教你读懂关键指标',excerpt:'拿到体检报告最怕看见箭头。其实绝大多数异常不意味着生病，但这几个指标确实不能忽视。',url:'article-checkup-report.html',category:'日常保健',date:'2026-05-22'},
     {title:'洗手这件小事，你做对了吗？',excerpt:'最简单、最有效的防病方法，就长在你胳膊上。一双没洗干净的手上，能携带几十万甚至上百万个细菌。',url:'article-wash-hands.html',category:'日常保健',date:'2026-05-20'},
     {title:'脖子又酸又僵？久坐族护颈小技巧',excerpt:'低头15度颈椎负重约12公斤。颈椎的磨损不可逆，只能预防和延缓。',url:'article-neck-care.html',category:'日常保健',date:'2026-05-19'},
     {title:'你每天吃的盐，可能远超想象',excerpt:'大多数中国人日均盐摄入量在10克以上，远超5克标准。问题就出在隐形盐上。',url:'article-salt-intake.html',category:'饮食营养',date:'2026-05-18'},
@@ -199,7 +200,7 @@
 
     // Close search on Escape
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && searchBar) {
         searchBar.classList.remove('open');
         clearSearch();
       }
@@ -247,21 +248,7 @@
     el.textContent = (count + 88);
   });
 
-  // --- Share buttons ---
-  document.querySelectorAll('.share-link.wechat').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      var url = window.location.href;
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(function () {
-          alert('链接已复制，请粘贴到微信中分享');
-        });
-      } else {
-        prompt('复制链接分享到微信：', url);
-      }
-    });
-  });
-
+  // --- Share: copy link ---
   document.querySelectorAll('.share-link.copy').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();

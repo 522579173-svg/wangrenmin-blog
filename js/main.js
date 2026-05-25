@@ -271,7 +271,10 @@
       var title = document.title.split(' | ')[0];
       var url = window.location.href;
       var shareUrl = 'https://service.weibo.com/share/share.php?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url);
-      window.open(shareUrl, '_blank', 'width=600,height=500');
+      var w = window.open(shareUrl, 'weiboShare', 'width=600,height=500');
+      if (!w) {
+        window.location.href = shareUrl;
+      }
     });
   });
 

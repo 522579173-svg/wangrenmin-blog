@@ -264,17 +264,14 @@
     });
   });
 
-  // Weibo: open share page
+  // Weibo: open share page in new tab (works on both mobile and desktop)
   document.querySelectorAll('.share-link.weibo').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       var title = document.title.split(' | ')[0];
       var url = window.location.href;
       var shareUrl = 'https://service.weibo.com/share/share.php?title=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url);
-      var w = window.open(shareUrl, 'weiboShare', 'width=600,height=500');
-      if (!w) {
-        window.location.href = shareUrl;
-      }
+      window.open(shareUrl, '_blank');
     });
   });
 
